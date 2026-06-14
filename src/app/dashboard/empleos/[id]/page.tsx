@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { api } from "@/lib/api";
+import { NotificationBell } from "@/components/NotificationBell";
 import type { VacancyDetail } from "@/lib/types";
 import { Button } from "@/components/ui";
 
@@ -17,7 +18,13 @@ export default function VacanteDetallePage() {
     api<{ data: VacancyDetail }>(`/match/${id}`).then((r) => setV(r.data)).catch(() => {});
   }, [id]);
 
-  if (!v) return <div className="grid place-items-center min-h-screen text-gris">Cargando…</div>;
+  if (!v) return (
+    <div className="flex flex-col min-h-screen animate-pulse p-6 gap-4">
+      <div className="h-6 w-48 rounded-xl bg-gray-200" />
+      <div className="h-32 rounded-2xl bg-gray-200" />
+      <div className="h-24 rounded-2xl bg-gray-200" />
+    </div>
+  );
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -25,6 +32,7 @@ export default function VacanteDetallePage() {
         <button onClick={() => router.push("/dashboard/empleos")} className="flex items-center gap-2 text-gris text-sm">
           <i className="bx bx-left-arrow-alt" /> Empleos / <span className="text-tinta font-semibold">{v.titulo}</span>
         </button>
+        <div className="hidden lg:flex"><NotificationBell /></div>
       </header>
 
       <div className="p-4 sm:p-6 lg:p-9 grid grid-cols-1 lg:grid-cols-3 gap-6">

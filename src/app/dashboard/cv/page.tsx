@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { api } from "@/lib/api";
 import { toast } from "sonner";
+import { NotificationBell } from "@/components/NotificationBell";
 import type { CvData } from "@/lib/types";
 import { Button } from "@/components/ui";
 
@@ -33,9 +34,12 @@ export default function CvPage() {
     <div className="flex flex-col min-h-screen">
       <header className="flex items-center justify-between px-5 sm:px-9 py-5 bg-white border-b border-gray-100">
         <h1 className="text-xl font-extrabold">CV Inteligente</h1>
-        <Button onClick={generar} disabled={loading} className="px-4 !py-2.5 text-sm">
-          {loading ? "Generando…" : cv ? "Regenerar CV" : "Generar CV"}
-        </Button>
+        <div className="flex items-center gap-3">
+          <div className="hidden lg:flex"><NotificationBell /></div>
+          <Button onClick={generar} disabled={loading} className="px-4 !py-2.5 text-sm">
+            {loading ? "Generando…" : cv ? "Regenerar CV" : "Generar CV"}
+          </Button>
+        </div>
       </header>
 
       <div className="p-4 sm:p-6 lg:p-9">

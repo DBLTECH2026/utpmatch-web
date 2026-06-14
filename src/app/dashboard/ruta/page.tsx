@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import type { GapsData, RouteData } from "@/lib/types";
+import { NotificationBell } from "@/components/NotificationBell";
 
 /** Ruta & Brechas — "ya tienes / te falta" + ruta priorizada hacia el rol. */
 export default function RutaPage() {
@@ -23,18 +24,27 @@ export default function RutaPage() {
   }, []);
 
   if (!route || !gaps) {
-    return <div className="grid place-items-center min-h-screen text-gris">Cargando…</div>;
+    return (
+      <div className="flex flex-col min-h-screen animate-pulse p-6 gap-4">
+        <div className="h-6 w-48 rounded-xl bg-gray-200" />
+        <div className="h-40 rounded-2xl bg-gray-200" />
+        <div className="h-40 rounded-2xl bg-gray-200" />
+      </div>
+    );
   }
 
   return (
     <div className="flex flex-col min-h-screen">
       <header className="flex items-center justify-between px-5 sm:px-9 py-5 bg-white border-b border-gray-100">
         <h1 className="text-xl font-extrabold">Ruta & Brechas</h1>
-        <div className="flex items-center gap-2 p-1.5 rounded-xl bg-niebla">
-          <span className="text-[13px] text-gris pl-2">Meta:</span>
-          <div className="flex items-center gap-2 bg-white rounded-lg px-3 py-1.5 shadow-sm">
-            <span className="font-semibold text-[14px]">{route.rol_objetivo}</span>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 p-1.5 rounded-xl bg-niebla">
+            <span className="text-[13px] text-gris pl-2">Meta:</span>
+            <div className="flex items-center gap-2 bg-white rounded-lg px-3 py-1.5 shadow-sm">
+              <span className="font-semibold text-[14px]">{route.rol_objetivo}</span>
+            </div>
           </div>
+          <div className="hidden lg:flex"><NotificationBell /></div>
         </div>
       </header>
 

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { api } from "@/lib/api";
+import { NotificationBell } from "@/components/NotificationBell";
 
 interface Msg {
   from: "ia" | "yo";
@@ -45,6 +46,7 @@ export default function CopilotoPage() {
           <h1 className="font-extrabold leading-none">Copiloto</h1>
           <p className="text-xs text-teal mt-1">● en línea · proactivo</p>
         </div>
+        <div className="hidden lg:flex ml-auto"><NotificationBell /></div>
       </header>
 
       <div className="flex-1 overflow-y-auto p-4 sm:p-9 space-y-4">

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { api, ApiError } from "@/lib/api";
 import { useAuth } from "@/lib/auth-context";
+import { NotificationBell } from "@/components/NotificationBell";
 import { toast } from "sonner";
 import type { Career, Profile } from "@/lib/types";
 import { Button, Field, Select } from "@/components/ui";
@@ -69,9 +70,7 @@ export default function PerfilPage() {
     <div className="flex flex-col min-h-screen">
       <header className="flex items-center justify-between px-5 sm:px-9 py-5 bg-white border-b border-gray-100">
         <h1 className="text-xl font-extrabold">Perfil 360</h1>
-        <div className="w-10 h-10 rounded-full bg-rojoT flex items-center justify-center font-bold text-rojo">
-          {user?.name?.slice(0, 2).toUpperCase()}
-        </div>
+        <div className="hidden lg:flex"><NotificationBell /></div>
       </header>
 
       <div className="p-4 sm:p-6 lg:p-9 grid lg:grid-cols-2 gap-6">

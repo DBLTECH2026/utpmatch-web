@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
+import { NotificationBell } from "@/components/NotificationBell";
 import type { VacancyItem } from "@/lib/types";
 
 /** Empleos — búsqueda conversacional + vacantes con % match. */
@@ -48,6 +49,7 @@ export default function EmpleosPage() {
             className="flex-1 bg-transparent text-[13px] outline-none"
           />
         </form>
+        <div className="hidden lg:flex shrink-0"><NotificationBell /></div>
       </header>
 
       <div className="p-4 sm:p-6 lg:p-9">

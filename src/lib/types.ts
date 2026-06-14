@@ -108,6 +108,32 @@ export interface AdvisorItem {
   especialidad: string | null;
   empresa: string | null;
   rating: number;
+  bio: string | null;
+  linkedin_url: string | null;
+}
+
+export interface AdvisorSession {
+  id: number;
+  usuario: string;
+  email: string;
+  carrera: string | null;
+  ciclo: number | null;
+  estado: "solicitada" | "confirmada" | "completada" | "cancelada";
+  fecha: string | null;
+  notas: string | null;
+  created_at: string;
+}
+
+export interface AdvisorDashboardData {
+  nombre: string;
+  especialidad: string | null;
+  empresa: string | null;
+  rating: number;
+  pendientes: number;
+  confirmadas: number;
+  completadas: number;
+  hoy: AdvisorSession[];
+  proximas: AdvisorSession[];
 }
 
 export interface Nudge {

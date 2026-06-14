@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { NotificationBell } from "@/components/NotificationBell";
 import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth-context";
 import { confirmAction } from "@/lib/ui-feedback";
@@ -46,7 +47,13 @@ export default function InicioPage() {
     api<{ data: Career[] }>("/careers", { auth: false }).then((r) => setCareers(r.data)).catch(() => {});
   }, []);
 
-  if (!user) return <div className="grid place-items-center min-h-screen text-gris">Cargando…</div>;
+  if (!user) return (
+    <div className="flex flex-col min-h-screen animate-pulse p-6 gap-4">
+      <div className="h-6 w-48 rounded-xl bg-gray-200" />
+      <div className="h-32 rounded-2xl bg-gray-200" />
+      <div className="h-32 rounded-2xl bg-gray-200" />
+    </div>
+  );
 
   const roles = careers.find((c) => c.carrera === user.carrera)?.roles ?? [];
   const skills = user.profile?.skills ?? [];
@@ -79,9 +86,7 @@ export default function InicioPage() {
     <div className="flex flex-col min-h-screen">
       <header className="flex items-center justify-between px-5 sm:px-9 py-5 bg-white border-b border-gray-100">
         <h1 className="text-xl font-extrabold">Inicio</h1>
-        <div className="w-10 h-10 rounded-full bg-rojoT flex items-center justify-center font-bold text-rojo">
-          {user.name.slice(0, 2).toUpperCase()}
-        </div>
+        <div className="hidden lg:flex"><NotificationBell /></div>
       </header>
 
       <div className="p-4 sm:p-6 lg:p-9">
