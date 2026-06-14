@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { api } from "@/lib/api";
+import { toast } from "sonner";
 import type { CvData } from "@/lib/types";
 import { Button } from "@/components/ui";
 
@@ -12,9 +13,13 @@ export default function CvPage() {
 
   async function generar() {
     setLoading(true);
+    const t = toast.loading("Generando tu CV…");
     try {
       const r = await api<{ data: CvData }>("/cv", { method: "POST", body: {} });
       setCv(r.data);
+      toast.success(`CV generado · ATS ${r.data.ats_score}`, { id: t });
+    } catch {
+      toast.error("No se pudo generar el CV.", { id: t });
     } finally {
       setLoading(false);
     }

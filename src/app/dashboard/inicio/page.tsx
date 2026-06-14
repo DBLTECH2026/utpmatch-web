@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth-context";
+import { confirmAction } from "@/lib/ui-feedback";
+import { toast } from "sonner";
 import type { Career } from "@/lib/types";
 
 // Icono boxicons por rol (heurística por palabra clave).
@@ -52,12 +54,23 @@ export default function InicioPage() {
   const metaActual = user.profile?.rol_objetivo;
 
   async function elegir(rol: string) {
+    const ok = await confirmAction({
+      title: metaActual ? "Cambiar tu meta" : "Confirmar tu meta",
+      message: metaActual
+        ? `¿Cambiar tu meta a "${rol}"? Tu ruta y brechas se recalcularán.`
+        : `¿Establecer "${rol}" como tu meta? Armaremos tu ruta de inmediato.`,
+      okText: "Sí, es mi meta",
+    });
+    if (!ok) return;
+
     setSaving(rol);
     try {
       await api("/route/target", { method: "PUT", body: { rol_objetivo: rol } });
       await refresh();
+      toast.success(`Meta: ${rol}`, { description: "Tu ruta fue recalculada." });
       router.push("/dashboard");
     } catch {
+      toast.error("No se pudo guardar tu meta. Inténtalo de nuevo.");
       setSaving(null);
     }
   }

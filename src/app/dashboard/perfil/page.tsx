@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { api, ApiError } from "@/lib/api";
 import { useAuth } from "@/lib/auth-context";
+import { toast } from "sonner";
 import type { Career, Profile } from "@/lib/types";
 import { Button, Field, Select } from "@/components/ui";
 
@@ -56,8 +57,9 @@ export default function PerfilPage() {
       });
       setProfile(res.data);
       setSaved(true);
+      toast.success("Perfil actualizado");
     } catch (err) {
-      if (err instanceof ApiError) alert(err.message);
+      toast.error(err instanceof ApiError ? err.message : "No se pudo actualizar el perfil.");
     } finally {
       setSaving(false);
     }

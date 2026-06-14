@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
+import { confirmAction } from "@/lib/ui-feedback";
+import { toast } from "sonner";
 import type { AdvisorItem } from "@/lib/types";
 import { Button } from "@/components/ui";
 
@@ -14,9 +16,21 @@ export default function AsesoresPage() {
     api<{ data: AdvisorItem[] }>("/advisors").then((r) => setAdvisors(r.data)).catch(() => {});
   }, []);
 
-  async function agendar(id: number) {
-    await api("/advisor-sessions", { method: "POST", body: { advisor_id: id } });
-    setAgendado(id);
+  async function agendar(advisor: AdvisorItem) {
+    const ok = await confirmAction({
+      title: "Agendar sesión",
+      message: `¿Solicitar una sesión con ${advisor.nombre}?`,
+      okText: "Sí, agendar",
+    });
+    if (!ok) return;
+
+    try {
+      await api("/advisor-sessions", { method: "POST", body: { advisor_id: advisor.id } });
+      setAgendado(advisor.id);
+      toast.success("Sesión solicitada", { description: `${advisor.nombre} te contactará pronto.` });
+    } catch {
+      toast.error("No se pudo agendar. Inténtalo de nuevo.");
+    }
   }
 
   return (
@@ -41,7 +55,7 @@ export default function AsesoresPage() {
               <Button
                 variant="teal"
                 className="w-full !py-2.5 text-sm"
-                onClick={() => agendar(a.id)}
+                onClick={() => agendar(a)}
                 disabled={agendado === a.id}
               >
                 {agendado === a.id ? "Sesión solicitada" : "Agendar"}

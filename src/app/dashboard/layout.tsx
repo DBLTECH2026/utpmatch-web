@@ -5,6 +5,8 @@ import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { useAuth } from "@/lib/auth-context";
+import { confirmAction } from "@/lib/ui-feedback";
+import { toast } from "sonner";
 
 const MENU = [
   { href: "/dashboard/inicio", label: "Inicio", icon: "bx-home-alt" },
@@ -41,6 +43,19 @@ export default function DashboardLayout({
   useEffect(() => {
     setDrawer(false);
   }, [pathname]);
+
+  async function handleLogout() {
+    const ok = await confirmAction({
+      title: "Cerrar sesión",
+      message: "¿Seguro que quieres salir de UTP+Match?",
+      okText: "Sí, salir",
+      cancelText: "Cancelar",
+    });
+    if (!ok) return;
+    await logout();
+    toast.success("Sesión cerrada");
+    router.replace("/login");
+  }
 
   if (loading || !user) {
     return <div className="min-h-screen grid place-items-center text-gris">Cargando…</div>;
@@ -106,10 +121,7 @@ export default function DashboardLayout({
         </div>
 
         <button
-          onClick={async () => {
-            await logout();
-            router.replace("/login");
-          }}
+          onClick={handleLogout}
           className="mt-3 w-full flex items-center justify-center gap-1.5 rounded-lg bg-white/[.06] hover:bg-rojo/20 border border-white/10 py-2 text-xs text-rojo font-semibold transition"
         >
           <i className="bx bx-log-out" /> Cerrar sesión
