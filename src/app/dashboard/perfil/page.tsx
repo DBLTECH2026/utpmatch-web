@@ -63,8 +63,7 @@ export default function PerfilPage() {
       <div className="p-9 grid lg:grid-cols-2 gap-6">
         {/* Datos del usuario + score */}
         <section className="space-y-6">
-          <div className="rounded-3xl bg-tinta text-white p-6 flex items-center gap-5 relative overflow-hidden">
-            <div className="absolute -right-10 -top-10 w-40 h-40 rounded-full bg-teal/20" />
+          <div className="rounded-3xl bg-tinta text-white p-6 flex items-center gap-5">
             <div className="relative w-[96px] h-[96px] shrink-0">
               <svg
                 className="w-[96px] h-[96px]"

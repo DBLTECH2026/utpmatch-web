@@ -11,6 +11,8 @@ const MENU = [
   { href: "/dashboard/ruta", label: "Ruta & Brechas" },
   { href: "/dashboard/cv", label: "CV Inteligente" },
   { href: "/dashboard/empleos", label: "Empleos" },
+  { href: "/dashboard/asesores", label: "Asesores" },
+  { href: "/dashboard/copiloto", label: "Copiloto" },
 ];
 
 export default function DashboardLayout({

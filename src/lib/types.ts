@@ -38,3 +38,79 @@ export interface User {
   profile?: Profile;
   connections?: Connection[];
 }
+
+// --- Dominios adicionales ---
+
+export interface RoutePaso {
+  orden: number;
+  skill: string;
+  demanda_pct: number;
+  estado: "pendiente" | "en_curso" | "completado";
+  taller: string | null;
+}
+
+export interface RouteData {
+  rol_objetivo: string;
+  match_actual: number;
+  match_meta: number;
+  pasos: RoutePaso[];
+}
+
+export interface GapsData {
+  tiene: { skill_id: number; nombre: string; demanda_pct: number }[];
+  falta: { skill_id: number; nombre: string; demanda_pct: number }[];
+  match_actual: number;
+}
+
+export interface DashboardData {
+  usuario: string;
+  rol_objetivo: string;
+  score: number;
+  match_actual: number;
+  match_meta: number;
+  brechas: number;
+  vacantes: number;
+  ruta: RoutePaso[];
+  nudge: { mensaje: string; cta_label: string | null; cta_route: string | null } | null;
+}
+
+export interface VacancyItem {
+  id: number;
+  titulo: string;
+  empresa: string;
+  ubicacion: string | null;
+  modalidad: string | null;
+  match_pct: number;
+  faltantes: string[];
+}
+
+export interface VacancyDetail extends VacancyItem {
+  salario: string | null;
+  cumple: string[];
+}
+
+export interface AdvisorItem {
+  id: number;
+  nombre: string;
+  especialidad: string | null;
+  empresa: string | null;
+  rating: number;
+}
+
+export interface Nudge {
+  id: number;
+  tipo: string;
+  mensaje: string;
+  cta_label: string | null;
+  cta_route: string | null;
+}
+
+export interface CvData {
+  id: number;
+  rol_objetivo: string;
+  plantilla: string;
+  json_data: Record<string, unknown>;
+  ats_score: number;
+  sugerencias: { punto: string; taller: string }[] | null;
+  version: number;
+}
