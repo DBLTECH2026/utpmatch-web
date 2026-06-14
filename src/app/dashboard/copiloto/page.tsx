@@ -63,7 +63,7 @@ export default function CopilotoPage() {
       </div>
 
       <form onSubmit={enviar} className="p-4 sm:p-6 bg-white border-t border-gray-100">
-        <div className="flex items-center gap-3 bg-niebla rounded-2xl px-5 py-3.5 max-w-[720px]">
+        <div className="flex items-center gap-3 bg-niebla rounded-2xl px-5 py-3.5 w-full">
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
