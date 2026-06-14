@@ -12,7 +12,7 @@ export default function Home() {
   useEffect(() => {
     if (loading) return;
     if (!user) router.replace("/login");
-    else if (!user.profile?.rol_objetivo) router.replace("/bienvenida");
+    else if (!user.profile?.rol_objetivo) router.replace("/dashboard/inicio");
     else router.replace("/dashboard");
   }, [user, loading, router]);
 

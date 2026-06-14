@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useAuth } from "@/lib/auth-context";
 
 const MENU = [
+  { href: "/dashboard/inicio", label: "Inicio", icon: "bx-home-alt" },
   { href: "/dashboard", label: "Dashboard", icon: "bx-grid-alt" },
   { href: "/dashboard/perfil", label: "Perfil 360", icon: "bx-user" },
   { href: "/dashboard/ruta", label: "Ruta & Brechas", icon: "bx-git-branch" },
@@ -25,15 +26,16 @@ export default function DashboardLayout({
   const router = useRouter();
   const pathname = usePathname();
 
-  // Guard de ruta: sin sesión → login; sin meta elegida → bienvenida.
+  // Guard de ruta: sin sesión → login; sin meta elegida → módulo Inicio
+  // (donde se elige el rol). Inicio siempre es accesible.
   useEffect(() => {
     if (loading) return;
     if (!user) {
       router.replace("/login");
-    } else if (!user.profile?.rol_objetivo) {
-      router.replace("/bienvenida");
+    } else if (!user.profile?.rol_objetivo && pathname !== "/dashboard/inicio") {
+      router.replace("/dashboard/inicio");
     }
-  }, [loading, user, router]);
+  }, [loading, user, router, pathname]);
 
   if (loading || !user) {
     return (

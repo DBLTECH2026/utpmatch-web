@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth-context";
 import type { Career } from "@/lib/types";
-import { Logo } from "@/components/ui";
 
 // Icono boxicons por rol (heurística por palabra clave).
 function rolIcon(rol: string): string {
@@ -34,32 +33,27 @@ const item = {
   show: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 260, damping: 24 } },
 };
 
-export default function BienvenidaPage() {
+/** Inicio — módulo de bienvenida: resumen UTP + elegir rol objetivo. */
+export default function InicioPage() {
   const router = useRouter();
-  const { user, loading, refresh } = useAuth();
+  const { user, refresh } = useAuth();
   const [careers, setCareers] = useState<Career[]>([]);
   const [saving, setSaving] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!loading && !user) router.replace("/login");
-  }, [loading, user, router]);
 
   useEffect(() => {
     api<{ data: Career[] }>("/careers", { auth: false }).then((r) => setCareers(r.data)).catch(() => {});
   }, []);
 
-  if (loading || !user) {
-    return <div className="grid place-items-center min-h-screen text-gris">Cargando…</div>;
-  }
+  if (!user) return <div className="grid place-items-center min-h-screen text-gris">Cargando…</div>;
 
   const roles = careers.find((c) => c.carrera === user.carrera)?.roles ?? [];
   const skills = user.profile?.skills ?? [];
   const cursos = user.courses ?? [];
+  const metaActual = user.profile?.rol_objetivo;
 
   async function elegir(rol: string) {
     setSaving(rol);
     try {
-      // Setear la meta recalcula ruta/brechas en el backend.
       await api("/route/target", { method: "PUT", body: { rol_objetivo: rol } });
       await refresh();
       router.push("/dashboard");
@@ -69,27 +63,28 @@ export default function BienvenidaPage() {
   }
 
   return (
-    <main className="min-h-screen bg-niebla">
-      <div className="max-w-5xl mx-auto px-6 py-12">
+    <div className="flex flex-col min-h-screen">
+      <header className="flex items-center justify-between px-9 py-5 bg-white border-b border-gray-100">
+        <h1 className="text-xl font-extrabold">Inicio</h1>
+        <div className="w-10 h-10 rounded-full bg-rojoT flex items-center justify-center font-bold text-rojo">
+          {user.name.slice(0, 2).toUpperCase()}
+        </div>
+      </header>
+
+      <div className="p-9 max-w-5xl">
         {/* Saludo */}
         <motion.div initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
-          <Logo size={56} />
-          <h1 className="mt-5 text-[34px] font-extrabold leading-tight flex items-center gap-2">
+          <h2 className="text-[30px] font-extrabold leading-tight flex items-center gap-2">
             Hola, {user.name.split(" ")[0]}
             <i className="bx bx-hand text-rojo" />
-          </h1>
+          </h2>
           <p className="text-gris mt-1">
             Bienvenida a <b className="text-tinta">UTP+Match</b>. Ya importamos tu información de la UTP. Elige tu meta y armamos tu ruta.
           </p>
         </motion.div>
 
         {/* Resumen UTP */}
-        <motion.div
-          variants={container}
-          initial="hidden"
-          animate="show"
-          className="grid sm:grid-cols-3 gap-4 mt-8"
-        >
+        <motion.div variants={container} initial="hidden" animate="show" className="grid sm:grid-cols-3 gap-4 mt-7">
           <motion.div variants={item} className="rounded-2xl bg-white border border-gray-100 p-5">
             <i className="bx bx-book-open text-rojo text-2xl" />
             <p className="text-2xl font-extrabold mt-2">Ciclo {user.ciclo ?? "—"}</p>
@@ -123,7 +118,7 @@ export default function BienvenidaPage() {
           <motion.div variants={item} initial="hidden" animate="show" className="rounded-2xl bg-white border border-gray-100 p-5">
             <p className="text-xs font-bold uppercase tracking-widest text-gris mb-3">Cursos UTP</p>
             <ul className="space-y-1.5 text-sm">
-              {cursos.slice(0, 5).map((c) => (
+              {cursos.slice(0, 6).map((c) => (
                 <li key={c.nombre} className="flex items-center justify-between">
                   <span className="flex items-center gap-2">
                     <i className={`bx ${c.estado === "aprobado" ? "bx-check-circle text-teal" : "bx-time text-gris"}`} />
@@ -132,39 +127,45 @@ export default function BienvenidaPage() {
                   <span className="text-gris">{c.nota ?? "—"}</span>
                 </li>
               ))}
+              {cursos.length === 0 && <li className="text-gris">Sin cursos importados.</li>}
             </ul>
           </motion.div>
         </div>
 
         {/* Elegir rol */}
         <div className="mt-10">
-          <h2 className="text-xl font-extrabold">¿Qué quieres ser?</h2>
+          <h3 className="text-xl font-extrabold">¿Qué quieres ser?</h3>
           <p className="text-gris text-sm mb-5">
             Elige tu rol objetivo de {user.carrera}. Podrás cambiarlo cuando quieras — tu ruta se recalcula sola.
           </p>
           <motion.div variants={container} initial="hidden" animate="show" className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {roles.map((rol) => (
-              <motion.button
-                key={rol}
-                variants={item}
-                whileHover={{ y: -4, scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                disabled={!!saving}
-                onClick={() => elegir(rol)}
-                className="text-left rounded-2xl bg-white border-2 border-gray-100 hover:border-rojo p-5 transition disabled:opacity-60"
-              >
-                <div className="w-11 h-11 rounded-xl bg-rojoT flex items-center justify-center mb-3">
-                  <i className={`bx ${rolIcon(rol)} text-rojo text-2xl`} />
-                </div>
-                <p className="font-bold">{rol}</p>
-                <p className="text-xs text-gris mt-1">
-                  {saving === rol ? "Armando tu ruta…" : "Ver mi ruta hacia esta meta"}
-                </p>
-              </motion.button>
-            ))}
+            {roles.map((rol) => {
+              const activo = rol === metaActual;
+              return (
+                <motion.button
+                  key={rol}
+                  variants={item}
+                  whileHover={{ y: -4, scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  disabled={!!saving}
+                  onClick={() => elegir(rol)}
+                  className={`text-left rounded-2xl bg-white border-2 p-5 transition disabled:opacity-60 ${
+                    activo ? "border-rojo ring-2 ring-rojo/20" : "border-gray-100 hover:border-rojo"
+                  }`}
+                >
+                  <div className="w-11 h-11 rounded-xl bg-rojoT flex items-center justify-center mb-3">
+                    <i className={`bx ${rolIcon(rol)} text-rojo text-2xl`} />
+                  </div>
+                  <p className="font-bold">{rol}</p>
+                  <p className="text-xs text-gris mt-1">
+                    {saving === rol ? "Armando tu ruta…" : activo ? "Tu meta actual" : "Ver mi ruta hacia esta meta"}
+                  </p>
+                </motion.button>
+              );
+            })}
           </motion.div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

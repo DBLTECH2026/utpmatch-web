@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
 import { ApiError } from "@/lib/api";
 import { Logo, Button, Field } from "@/components/ui";
@@ -21,8 +20,8 @@ export default function LoginPage() {
     setLoading(true);
     try {
       const u = await login(email, password);
-      // Si aún no tiene meta, va al módulo de bienvenida; si ya, al dashboard.
-      router.push(u?.profile?.rol_objetivo ? "/dashboard" : "/bienvenida");
+      // Si aún no tiene meta, va al módulo Inicio (elegir rol); si ya, al dashboard.
+      router.push(u?.profile?.rol_objetivo ? "/dashboard" : "/dashboard/inicio");
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Error al ingresar.");
     } finally {
@@ -79,14 +78,6 @@ export default function LoginPage() {
             )}
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? "Ingresando…" : "Ingresar con cuenta UTP"}
-            </Button>
-            <Button
-              type="button"
-              variant="ghost"
-              className="w-full"
-              onClick={() => router.push("/registro")}
-            >
-              Crear cuenta nueva
             </Button>
           </form>
 
