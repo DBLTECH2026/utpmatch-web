@@ -121,6 +121,7 @@ export interface AdvisorSession {
   estado: "solicitada" | "confirmada" | "completada" | "cancelada";
   fecha: string | null;
   notas: string | null;
+  zoom_link: string | null;
   created_at: string;
 }
 
