@@ -38,8 +38,8 @@ export default function CopilotoPage() {
   }
 
   return (
-    <div className="flex flex-col h-screen">
-      <header className="flex items-center gap-3 px-9 py-5 bg-white border-b border-gray-100">
+    <div className="flex flex-col min-h-screen">
+      <header className="flex items-center gap-3 px-5 sm:px-9 py-5 bg-white border-b border-gray-100">
         <div className="w-10 h-10 rounded-full bg-rojo flex items-center justify-center text-white text-sm font-bold">IA</div>
         <div>
           <h1 className="font-extrabold leading-none">Copiloto</h1>
@@ -47,22 +47,22 @@ export default function CopilotoPage() {
         </div>
       </header>
 
-      <div className="flex-1 overflow-y-auto p-9 space-y-4">
+      <div className="flex-1 overflow-y-auto p-4 sm:p-9 space-y-4">
         {msgs.map((m, i) =>
           m.from === "ia" ? (
-            <div key={i} className="max-w-[55%] rounded-2xl rounded-tl-md bg-rojoT p-4 text-[14px]">
+            <div key={i} className="max-w-[85%] sm:max-w-[55%] rounded-2xl rounded-tl-md bg-rojoT p-4 text-[14px]">
               {m.text}
             </div>
           ) : (
-            <div key={i} className="max-w-[45%] ml-auto rounded-2xl rounded-tr-md bg-tinta text-white p-4 text-[14px]">
+            <div key={i} className="max-w-[80%] sm:max-w-[45%] ml-auto rounded-2xl rounded-tr-md bg-tinta text-white p-4 text-[14px]">
               {m.text}
             </div>
           )
         )}
-        {sending && <div className="max-w-[40%] rounded-2xl rounded-tl-md bg-rojoT/60 p-4 text-[14px] text-gris">Escribiendo…</div>}
+        {sending && <div className="max-w-[70%] sm:max-w-[40%] rounded-2xl rounded-tl-md bg-rojoT/60 p-4 text-[14px] text-gris">Escribiendo…</div>}
       </div>
 
-      <form onSubmit={enviar} className="p-6 bg-white border-t border-gray-100">
+      <form onSubmit={enviar} className="p-4 sm:p-6 bg-white border-t border-gray-100">
         <div className="flex items-center gap-3 bg-niebla rounded-2xl px-5 py-3.5 max-w-[720px]">
           <input
             value={input}

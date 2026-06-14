@@ -32,19 +32,19 @@ export default function DashboardPage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="flex items-center justify-between px-9 py-5 bg-white border-b border-gray-100">
+      <header className="flex items-center justify-between px-5 sm:px-9 py-5 bg-white border-b border-gray-100">
         <div>
           <p className="text-gris text-[13px]">Buenos días,</p>
-          <h1 className="text-xl font-extrabold leading-tight">{d.usuario}</h1>
+          <h1 className="text-lg sm:text-xl font-extrabold leading-tight">{d.usuario}</h1>
         </div>
         <div className="w-10 h-10 rounded-full bg-rojoT flex items-center justify-center font-bold text-rojo">
           {d.usuario.slice(0, 2).toUpperCase()}
         </div>
       </header>
 
-      <div className="p-9">
+      <div className="p-4 sm:p-6 lg:p-9">
         {/* Banner del viaje */}
-        <div className="rounded-3xl bg-tinta text-white p-7 mb-6 flex items-center gap-8">
+        <div className="rounded-3xl bg-tinta text-white p-5 sm:p-7 mb-6 flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-8">
           <div className="relative w-[96px] h-[96px] shrink-0">
             <svg className="w-[96px] h-[96px]" style={{ transform: "rotate(-90deg)" }}>
               <circle cx="48" cy="48" r="40" stroke="rgba(255,255,255,.13)" strokeWidth="9" fill="none" />
@@ -82,9 +82,9 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Timeline + KPIs */}
-          <div className="col-span-2 rounded-2xl bg-white border border-gray-100 p-6">
+          <div className="lg:col-span-2 rounded-2xl bg-white border border-gray-100 p-5 sm:p-6">
             <h3 className="font-extrabold text-lg mb-5">Tu ruta paso a paso</h3>
             <div className="flex items-stretch gap-0">
               {hitos.map((h, i) => (
@@ -105,7 +105,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Copiloto */}
-          <div className="rounded-2xl bg-white border border-gray-100 p-6 flex flex-col">
+          <div className="rounded-2xl bg-white border border-gray-100 p-5 sm:p-6 flex flex-col">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 rounded-full bg-rojo flex items-center justify-center text-white text-xs font-bold">IA</div>
               <h3 className="font-extrabold">Copiloto</h3>

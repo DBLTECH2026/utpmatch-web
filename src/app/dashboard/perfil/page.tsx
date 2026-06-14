@@ -65,14 +65,14 @@ export default function PerfilPage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="flex items-center justify-between px-9 py-5 bg-white border-b border-gray-100">
+      <header className="flex items-center justify-between px-5 sm:px-9 py-5 bg-white border-b border-gray-100">
         <h1 className="text-xl font-extrabold">Perfil 360</h1>
         <div className="w-10 h-10 rounded-full bg-rojoT flex items-center justify-center font-bold text-rojo">
           {user?.name?.slice(0, 2).toUpperCase()}
         </div>
       </header>
 
-      <div className="p-9 grid lg:grid-cols-2 gap-6">
+      <div className="p-4 sm:p-6 lg:p-9 grid lg:grid-cols-2 gap-6">
         {/* Datos del usuario + score */}
         <section className="space-y-6">
           <div className="rounded-3xl bg-tinta text-white p-6 flex items-center gap-5">

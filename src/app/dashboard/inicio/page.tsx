@@ -64,14 +64,14 @@ export default function InicioPage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="flex items-center justify-between px-9 py-5 bg-white border-b border-gray-100">
+      <header className="flex items-center justify-between px-5 sm:px-9 py-5 bg-white border-b border-gray-100">
         <h1 className="text-xl font-extrabold">Inicio</h1>
         <div className="w-10 h-10 rounded-full bg-rojoT flex items-center justify-center font-bold text-rojo">
           {user.name.slice(0, 2).toUpperCase()}
         </div>
       </header>
 
-      <div className="p-9">
+      <div className="p-4 sm:p-6 lg:p-9">
         {/* Saludo */}
         <motion.div initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
           <h2 className="text-[30px] font-extrabold leading-tight flex items-center gap-2">

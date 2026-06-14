@@ -28,7 +28,7 @@ export default function RutaPage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="flex items-center justify-between px-9 py-5 bg-white border-b border-gray-100">
+      <header className="flex items-center justify-between px-5 sm:px-9 py-5 bg-white border-b border-gray-100">
         <h1 className="text-xl font-extrabold">Ruta & Brechas</h1>
         <div className="flex items-center gap-2 p-1.5 rounded-xl bg-niebla">
           <span className="text-[13px] text-gris pl-2">Meta:</span>
@@ -38,7 +38,7 @@ export default function RutaPage() {
         </div>
       </header>
 
-      <div className="p-9">
+      <div className="p-4 sm:p-6 lg:p-9">
         {/* Ya tienes */}
         <div className="rounded-2xl bg-white border border-gray-100 p-5 mb-5">
           <p className="text-xs font-bold uppercase tracking-widest text-teal2 mb-2">Ya tienes (tu base)</p>
@@ -56,7 +56,7 @@ export default function RutaPage() {
         <p className="text-xs font-bold uppercase tracking-widest text-rojo mb-3">
           Te falta · ruta priorizada hacia tu meta
         </p>
-        <div className="grid grid-cols-3 gap-4 mb-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-5">
           {route.pasos.map((p) => (
             <div key={p.orden} className="rounded-2xl bg-white border border-gray-100 p-5">
               <div className="flex items-center justify-between mb-2">

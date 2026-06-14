@@ -21,15 +21,15 @@ export default function AsesoresPage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="flex items-center justify-between px-9 py-5 bg-white border-b border-gray-100">
+      <header className="flex items-center justify-between px-5 sm:px-9 py-5 bg-white border-b border-gray-100">
         <h1 className="text-xl font-extrabold">Asesores externos</h1>
       </header>
 
-      <div className="p-9">
+      <div className="p-4 sm:p-6 lg:p-9">
         <p className="text-gris mb-6 max-w-[620px]">
           Conéctate con mentores y coaches para preparar tu entrevista y tus primeros pasos en la industria.
         </p>
-        <div className="grid grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {advisors.map((a) => (
             <div key={a.id} className="rounded-2xl bg-white border border-gray-100 p-6">
               <div className="w-14 h-14 rounded-full bg-tealT flex items-center justify-center font-bold text-teal2 text-lg mb-3">

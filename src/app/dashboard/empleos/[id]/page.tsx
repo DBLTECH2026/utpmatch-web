@@ -21,14 +21,14 @@ export default function VacanteDetallePage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="flex items-center justify-between px-9 py-5 bg-white border-b border-gray-100">
+      <header className="flex items-center justify-between px-5 sm:px-9 py-5 bg-white border-b border-gray-100">
         <button onClick={() => router.push("/dashboard/empleos")} className="flex items-center gap-2 text-gris text-sm">
           <i className="bx bx-left-arrow-alt" /> Empleos / <span className="text-tinta font-semibold">{v.titulo}</span>
         </button>
       </header>
 
-      <div className="p-9 grid grid-cols-3 gap-6">
-        <div className="col-span-2 space-y-5">
+      <div className="p-4 sm:p-6 lg:p-9 grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2 space-y-5">
           <div className="rounded-2xl bg-white border border-gray-100 p-6">
             <div className="flex items-start justify-between mb-1">
               <h1 className="text-2xl font-extrabold">{v.titulo}</h1>

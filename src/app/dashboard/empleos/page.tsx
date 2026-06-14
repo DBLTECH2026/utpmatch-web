@@ -34,7 +34,7 @@ export default function EmpleosPage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="flex items-center justify-between gap-6 px-9 py-5 bg-white border-b border-gray-100">
+      <header className="flex items-center justify-between gap-6 px-5 sm:px-9 py-5 bg-white border-b border-gray-100">
         <h1 className="text-xl font-extrabold whitespace-nowrap">Empleos · Match</h1>
         <form
           onSubmit={(e) => { e.preventDefault(); buscar(query); }}
@@ -50,11 +50,11 @@ export default function EmpleosPage() {
         </form>
       </header>
 
-      <div className="p-9">
+      <div className="p-4 sm:p-6 lg:p-9">
         {loading ? (
           <p className="text-gris">Buscando…</p>
         ) : (
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {items.map((v) => (
               <button
                 key={v.id}

@@ -26,14 +26,14 @@ export default function CvPage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="flex items-center justify-between px-9 py-5 bg-white border-b border-gray-100">
+      <header className="flex items-center justify-between px-5 sm:px-9 py-5 bg-white border-b border-gray-100">
         <h1 className="text-xl font-extrabold">CV Inteligente</h1>
         <Button onClick={generar} disabled={loading} className="px-4 !py-2.5 text-sm">
           {loading ? "Generando…" : cv ? "Regenerar CV" : "Generar CV"}
         </Button>
       </header>
 
-      <div className="p-9">
+      <div className="p-4 sm:p-6 lg:p-9">
         {!cv ? (
           <div className="rounded-2xl bg-white border border-gray-100 p-10 text-center">
             <p className="text-gris">Genera tu CV optimizado para ATS sobre la plantilla estándar.</p>
@@ -42,9 +42,9 @@ export default function CvPage() {
             </Button>
           </div>
         ) : (
-          <div className="grid grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
             {/* Preview */}
-            <div className="col-span-3 rounded-2xl bg-white border border-gray-100 p-6 text-[12px] leading-relaxed">
+            <div className="lg:col-span-3 rounded-2xl bg-white border border-gray-100 p-6 text-[12px] leading-relaxed">
               <p className="font-bold text-[17px]">{data?.encabezado?.nombre}</p>
               <p className="text-gris">{data?.encabezado?.rol_objetivo}</p>
               <div className="h-px bg-gray-100 my-3" />
@@ -57,7 +57,7 @@ export default function CvPage() {
             </div>
 
             {/* ATS + talleres */}
-            <div className="col-span-2 space-y-4">
+            <div className="lg:col-span-2 space-y-4">
               <div className="rounded-2xl bg-white border border-gray-100 p-5 flex items-center gap-4">
                 <div className="relative w-[82px] h-[82px] shrink-0">
                   <svg className="w-[82px] h-[82px]" style={{ transform: "rotate(-90deg)" }}>
