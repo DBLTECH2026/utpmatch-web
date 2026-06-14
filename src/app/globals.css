@@ -1,26 +1,30 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/*
+ * Design tokens UTP+Match (sistema visual v3)
+ * Expuestos como utilidades Tailwind v4 vía @theme.
+ */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-rojo: #e2231a;
+  --color-rojo2: #b81810;
+  --color-teal: #13a07c;
+  --color-teal2: #0e7d60;
+  --color-rojoT: #fceae9;
+  --color-tealT: #e4f4ef;
+  --color-tinta: #16161a;
+  --color-gris: #6e6e78;
+  --color-niebla: #f4f4f7;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --background: #e9e9ee;
+  --foreground: #16161a;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
