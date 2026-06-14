@@ -71,7 +71,7 @@ export default function InicioPage() {
         </div>
       </header>
 
-      <div className="p-9 max-w-5xl">
+      <div className="p-9">
         {/* Saludo */}
         <motion.div initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
           <h2 className="text-[30px] font-extrabold leading-tight flex items-center gap-2">
