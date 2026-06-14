@@ -78,15 +78,39 @@ export default function DashboardLayout({
         })}
       </nav>
 
-      <div className="rounded-2xl bg-white/[.08] border border-white/10 p-4 mt-6">
-        <p className="text-xs text-white/55 mb-1">Sesión</p>
-        <p className="text-sm font-semibold truncate">{user.name}</p>
+      <div className="rounded-2xl bg-white/[.06] border border-white/10 p-3 mt-6">
+        <div className="flex items-center gap-3">
+          {/* Avatar / foto de perfil */}
+          <div className="relative shrink-0">
+            <div className="w-11 h-11 rounded-full bg-gradient-to-br from-rojo to-teal flex items-center justify-center font-bold text-white text-sm ring-2 ring-white/15">
+              {user.name.split(" ").map((p) => p[0]).slice(0, 2).join("")}
+            </div>
+            {/* indicador en línea */}
+            <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-teal border-2 border-tinta" />
+          </div>
+          <div className="min-w-0">
+            <p className="text-sm font-semibold truncate leading-tight">{user.name}</p>
+            <p className="text-[11px] text-white/45 truncate">{user.codigo_utp ?? user.email}</p>
+          </div>
+        </div>
+
+        {/* Carrera + ciclo */}
+        <div className="mt-3 space-y-1.5">
+          <span className="flex items-center gap-1.5 rounded-md bg-white/10 px-2 py-1.5 text-[11px] font-medium text-white/75">
+            <i className="bx bx-book-bookmark text-rojo shrink-0" />
+            <span className="truncate">{user.carrera ?? "—"}</span>
+          </span>
+          <span className="flex items-center gap-1.5 rounded-md bg-white/10 px-2 py-1.5 text-[11px] font-medium text-white/75">
+            <i className="bx bx-calendar text-teal shrink-0" /> Ciclo {user.ciclo ?? "—"}
+          </span>
+        </div>
+
         <button
           onClick={async () => {
             await logout();
             router.replace("/login");
           }}
-          className="mt-3 flex items-center gap-1.5 text-xs text-rojo font-semibold"
+          className="mt-3 w-full flex items-center justify-center gap-1.5 rounded-lg bg-white/[.06] hover:bg-rojo/20 border border-white/10 py-2 text-xs text-rojo font-semibold transition"
         >
           <i className="bx bx-log-out" /> Cerrar sesión
         </button>
