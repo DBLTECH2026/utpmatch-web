@@ -19,14 +19,15 @@ export default function DashboardPage() {
   }
 
   const hitos = [
-    { label: "Bases", sub: "Python · Git · SQL", color: "bg-teal", icon: "✓" },
+    { label: "Bases", sub: "Python · Git · SQL", color: "bg-teal", icon: "bx-check", text: "" },
     ...d.ruta.slice(0, 2).map((p) => ({
       label: p.skill,
       sub: p.taller ?? `${p.demanda_pct}% demanda`,
       color: p.estado === "en_curso" ? "bg-rojo" : "bg-gray-200",
-      icon: p.estado === "en_curso" ? "→" : String(p.orden),
+      icon: p.estado === "en_curso" ? "bx-right-arrow-alt" : "",
+      text: p.estado === "en_curso" ? "" : String(p.orden),
     })),
-    { label: "¡Postular!", sub: `${d.vacantes} vacantes`, color: "bg-tinta", icon: "🎯" },
+    { label: "¡Postular!", sub: `${d.vacantes} vacantes`, color: "bg-tinta", icon: "bxs-bullseye", text: "" },
   ];
 
   return (
@@ -89,7 +90,7 @@ export default function DashboardPage() {
               {hitos.map((h, i) => (
                 <div key={i} className="flex-1 text-center">
                   <div className={`w-11 h-11 mx-auto rounded-full ${h.color} flex items-center justify-center text-white font-bold`}>
-                    {h.icon}
+                    {h.icon ? <i className={`bx ${h.icon} text-xl`} /> : h.text}
                   </div>
                   <p className="font-semibold text-sm mt-2">{h.label}</p>
                   <p className="text-[11px] text-gris">{h.sub}</p>
@@ -118,7 +119,7 @@ export default function DashboardPage() {
                     onClick={() => d.nudge?.cta_route && router.push(d.nudge.cta_route)}
                     className="inline-flex w-max items-center gap-1.5 rounded-full bg-rojo px-3 py-1.5 text-[12.5px] font-semibold text-white"
                   >
-                    {d.nudge.cta_label} →
+                    {d.nudge.cta_label} <i className="bx bx-right-arrow-alt" />
                   </button>
                 )}
               </>
@@ -129,7 +130,7 @@ export default function DashboardPage() {
               onClick={() => router.push("/dashboard/copiloto")}
               className="mt-auto text-sm font-semibold text-rojo text-left"
             >
-              Abrir chat del copiloto →
+              Abrir chat del copiloto <i className="bx bx-right-arrow-alt" />
             </button>
           </div>
         </div>

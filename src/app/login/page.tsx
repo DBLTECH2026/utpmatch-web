@@ -20,8 +20,9 @@ export default function LoginPage() {
     setError(null);
     setLoading(true);
     try {
-      await login(email, password);
-      router.push("/dashboard/perfil");
+      const u = await login(email, password);
+      // Si aún no tiene meta, va al módulo de bienvenida; si ya, al dashboard.
+      router.push(u?.profile?.rol_objetivo ? "/dashboard" : "/bienvenida");
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Error al ingresar.");
     } finally {

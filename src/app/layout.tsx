@@ -20,6 +20,13 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="es" className={`${inter.variable} h-full`}>
+      <head>
+        {/* Boxicons (iconos del sidebar y UI) */}
+        <link
+          href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css"
+          rel="stylesheet"
+        />
+      </head>
       <body className="min-h-full">
         <AuthProvider>{children}</AuthProvider>
       </body>

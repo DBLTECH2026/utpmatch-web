@@ -45,7 +45,7 @@ export default function RutaPage() {
           <div className="flex flex-wrap gap-2">
             {gaps.tiene.map((s) => (
               <span key={s.skill_id} className="rounded-full bg-tealT px-3 py-1.5 text-[13px] font-semibold text-teal2">
-                ✓ {s.nombre}
+<i className="bx bx-check" /> {s.nombre}
               </span>
             ))}
             {gaps.tiene.length === 0 && <span className="text-sm text-gris">Aún sin skills registradas.</span>}
@@ -80,7 +80,7 @@ export default function RutaPage() {
           <p className="text-[15px]">
             Completando la ruta: <b>Match {route.match_actual}% → <span className="text-teal">{route.match_meta}%</span></b> hacia {route.rol_objetivo}.
           </p>
-          <span className="text-2xl">🎯</span>
+          <i className="bx bxs-bullseye text-2xl text-teal" />
         </div>
       </div>
     </div>

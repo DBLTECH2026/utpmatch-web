@@ -84,7 +84,7 @@ export default function CvPage() {
                     {cv.sugerencias.map((s, i) => (
                       <div key={i} className="flex items-center justify-between rounded-xl bg-rojoT/60 px-3 py-2.5 text-[13px]">
                         <span>{s.punto}</span>
-                        <span className="text-rojo font-semibold">{s.taller} →</span>
+                        <span className="text-rojo font-semibold flex items-center gap-1">{s.taller} <i className="bx bx-right-arrow-alt" /></span>
                       </div>
                     ))}
                   </div>

@@ -3,16 +3,17 @@
 import { useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
+import { AnimatePresence, motion } from "framer-motion";
 import { useAuth } from "@/lib/auth-context";
 
 const MENU = [
-  { href: "/dashboard", label: "Dashboard" },
-  { href: "/dashboard/perfil", label: "Perfil 360" },
-  { href: "/dashboard/ruta", label: "Ruta & Brechas" },
-  { href: "/dashboard/cv", label: "CV Inteligente" },
-  { href: "/dashboard/empleos", label: "Empleos" },
-  { href: "/dashboard/asesores", label: "Asesores" },
-  { href: "/dashboard/copiloto", label: "Copiloto" },
+  { href: "/dashboard", label: "Dashboard", icon: "bx-grid-alt" },
+  { href: "/dashboard/perfil", label: "Perfil 360", icon: "bx-user" },
+  { href: "/dashboard/ruta", label: "Ruta & Brechas", icon: "bx-git-branch" },
+  { href: "/dashboard/cv", label: "CV Inteligente", icon: "bx-file" },
+  { href: "/dashboard/empleos", label: "Empleos", icon: "bx-briefcase" },
+  { href: "/dashboard/asesores", label: "Asesores", icon: "bx-group" },
+  { href: "/dashboard/copiloto", label: "Copiloto", icon: "bx-bot" },
 ];
 
 export default function DashboardLayout({
@@ -24,9 +25,14 @@ export default function DashboardLayout({
   const router = useRouter();
   const pathname = usePathname();
 
-  // Guard de ruta: si no hay sesión tras cargar, redirige a login.
+  // Guard de ruta: sin sesión → login; sin meta elegida → bienvenida.
   useEffect(() => {
-    if (!loading && !user) router.replace("/login");
+    if (loading) return;
+    if (!user) {
+      router.replace("/login");
+    } else if (!user.profile?.rol_objetivo) {
+      router.replace("/bienvenida");
+    }
   }, [loading, user, router]);
 
   if (loading || !user) {
@@ -43,12 +49,7 @@ export default function DashboardLayout({
       <aside className="w-[236px] shrink-0 bg-tinta text-white flex flex-col px-4 py-6">
         <div className="flex items-center gap-3 mb-9 px-1">
           <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center p-1.5">
-            <Image
-              src="/iso-utpmatch.svg"
-              alt=""
-              width={28}
-              height={28}
-            />
+            <Image src="/iso-utpmatch.svg" alt="" width={28} height={28} />
           </div>
           <span className="font-extrabold text-lg">
             UTP<span className="text-rojo">+</span>Match
@@ -64,11 +65,12 @@ export default function DashboardLayout({
                 onClick={() => router.push(m.href)}
                 className={`w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition ${
                   active
-                    ? "bg-rojo text-white font-semibold"
+                    ? "bg-rojo text-white font-semibold shadow-[0_8px_20px_-6px_rgba(226,35,26,0.6)]"
                     : "text-white/55 hover:bg-white/10 hover:text-white"
                 }`}
               >
-                {m.label}
+                <i className={`bx ${m.icon} text-lg`} />
+                <span>{m.label}</span>
               </button>
             );
           })}
@@ -82,15 +84,27 @@ export default function DashboardLayout({
               await logout();
               router.replace("/login");
             }}
-            className="mt-3 text-xs text-rojo font-semibold"
+            className="mt-3 flex items-center gap-1.5 text-xs text-rojo font-semibold"
           >
-            Cerrar sesión
+            <i className="bx bx-log-out" /> Cerrar sesión
           </button>
         </div>
       </aside>
 
-      {/* Contenido */}
-      <div className="flex-1 bg-niebla">{children}</div>
+      {/* Contenido con transición animada por ruta */}
+      <div className="flex-1 bg-niebla overflow-hidden">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={pathname}
+            initial={{ opacity: 0, x: 18 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -18 }}
+            transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
+          >
+            {children}
+          </motion.div>
+        </AnimatePresence>
+      </div>
     </div>
   );
 }

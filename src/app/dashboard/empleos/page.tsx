@@ -40,7 +40,7 @@ export default function EmpleosPage() {
           onSubmit={(e) => { e.preventDefault(); buscar(query); }}
           className="flex-1 max-w-[440px] flex items-center gap-2 bg-niebla rounded-xl px-4 py-2.5"
         >
-          <span className="text-gris">🔎</span>
+          <i className="bx bx-search text-gris" />
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}

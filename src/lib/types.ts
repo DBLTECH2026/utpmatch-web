@@ -32,6 +32,13 @@ export interface Connection {
   last_sync_at: string | null;
 }
 
+export interface Course {
+  nombre: string;
+  estado: "aprobado" | "en_curso" | "matriculado";
+  nota: number | null;
+  ciclo: number | null;
+}
+
 export interface User {
   id: number;
   name: string;
@@ -42,6 +49,7 @@ export interface User {
   rol: Rol;
   profile?: Profile;
   connections?: Connection[];
+  courses?: Course[];
 }
 
 // --- Dominios adicionales ---

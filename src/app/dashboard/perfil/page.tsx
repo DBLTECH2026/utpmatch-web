@@ -135,7 +135,7 @@ export default function PerfilPage() {
                     key={s.id}
                     className="inline-flex items-center gap-1.5 rounded-full bg-tealT px-3 py-1.5 text-[13px] font-semibold text-teal2"
                   >
-                    {s.verificado && "✓"} {s.nombre}
+                    {s.verificado && <i className="bx bx-check" />} {s.nombre}
                   </span>
                 ))}
               </div>
@@ -178,7 +178,7 @@ export default function PerfilPage() {
 
             {saved && (
               <p className="rounded-xl bg-tealT px-4 py-3 text-sm text-teal2">
-                Perfil actualizado ✓
+                Perfil actualizado
               </p>
             )}
 

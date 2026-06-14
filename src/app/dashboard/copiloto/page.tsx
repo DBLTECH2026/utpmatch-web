@@ -13,7 +13,7 @@ export default function CopilotoPage() {
   const [msgs, setMsgs] = useState<Msg[]>([
     {
       from: "ia",
-      text: "Hola 👋 Te falta 1 curso para calificar a 3 vacantes nuevas de Frontend. ¿Te armo la ruta?",
+      text: "Hola, te falta 1 curso para calificar a 3 vacantes nuevas de Frontend. ¿Te armo la ruta?",
     },
   ]);
   const [input, setInput] = useState("");
@@ -70,7 +70,7 @@ export default function CopilotoPage() {
             placeholder="Pregúntale al copiloto sobre tu ruta, CV o empleos…"
             className="flex-1 bg-transparent text-[14px] outline-none"
           />
-          <button type="submit" className="w-9 h-9 rounded-xl bg-rojo text-white flex items-center justify-center">↑</button>
+          <button type="submit" className="w-9 h-9 rounded-xl bg-rojo text-white flex items-center justify-center"><i className="bx bx-up-arrow-alt" /></button>
         </div>
       </form>
     </div>

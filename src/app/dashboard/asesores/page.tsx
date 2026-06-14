@@ -37,14 +37,14 @@ export default function AsesoresPage() {
               </div>
               <p className="font-semibold text-[16px]">{a.nombre}</p>
               <p className="text-sm text-gris">{[a.especialidad, a.empresa].filter(Boolean).join(" · ")}</p>
-              <p className="text-xs text-teal2 font-semibold mt-2 mb-4">★ {a.rating}</p>
+              <p className="text-xs text-teal2 font-semibold mt-2 mb-4 flex items-center gap-1"><i className="bx bxs-star" /> {a.rating}</p>
               <Button
                 variant="teal"
                 className="w-full !py-2.5 text-sm"
                 onClick={() => agendar(a.id)}
                 disabled={agendado === a.id}
               >
-                {agendado === a.id ? "Sesión solicitada ✓" : "Agendar"}
+                {agendado === a.id ? "Sesión solicitada" : "Agendar"}
               </Button>
             </div>
           ))}
