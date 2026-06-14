@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import type { ButtonHTMLAttributes, InputHTMLAttributes } from "react";
+import type { ButtonHTMLAttributes, InputHTMLAttributes, SelectHTMLAttributes } from "react";
 
 /** Logo UTP+Match (proporción preservada). */
 export function Logo({ size = 64 }: { size?: number }) {
@@ -60,6 +60,38 @@ export function Field({
             : "border-gray-200 focus:ring-teal/30"
         }`}
       />
+      {error && <span className="mt-1 block text-xs text-rojo">{error}</span>}
+    </label>
+  );
+}
+
+/** Selector con label y error (mismo estilo que Field). */
+export function Select({
+  label,
+  error,
+  options,
+  placeholder,
+  ...props
+}: SelectHTMLAttributes<HTMLSelectElement> & {
+  label: string;
+  error?: string;
+  options: string[];
+  placeholder?: string;
+}) {
+  return (
+    <label className="block">
+      <span className="text-[13px] font-semibold text-tinta">{label}</span>
+      <select
+        {...props}
+        className={`mt-1.5 w-full rounded-xl border bg-white px-4 py-3 text-[15px] outline-none transition focus:ring-2 ${
+          error ? "border-rojo focus:ring-rojo/30" : "border-gray-200 focus:ring-teal/30"
+        }`}
+      >
+        {placeholder && <option value="">{placeholder}</option>}
+        {options.map((o) => (
+          <option key={o} value={o}>{o}</option>
+        ))}
+      </select>
       {error && <span className="mt-1 block text-xs text-rojo">{error}</span>}
     </label>
   );

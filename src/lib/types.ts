@@ -2,6 +2,11 @@
 
 export type Rol = "alumno" | "asesor" | "admin";
 
+export interface Career {
+  carrera: string;
+  roles: string[];
+}
+
 export interface Skill {
   id: number;
   nombre: string;

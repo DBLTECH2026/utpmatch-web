@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
-import { ApiError } from "@/lib/api";
-import { Logo, Button, Field } from "@/components/ui";
+import { api, ApiError } from "@/lib/api";
+import type { Career } from "@/lib/types";
+import { Logo, Button, Field, Select } from "@/components/ui";
 
 export default function RegistroPage() {
   const router = useRouter();
@@ -19,9 +20,17 @@ export default function RegistroPage() {
     carrera: "",
     ciclo: "",
   });
+  const [careers, setCareers] = useState<Career[]>([]);
   const [errors, setErrors] = useState<Record<string, string[]>>({});
   const [general, setGeneral] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  // Cargar catálogo de carreras (público).
+  useEffect(() => {
+    api<{ data: Career[] }>("/careers", { auth: false })
+      .then((r) => setCareers(r.data))
+      .catch(() => {});
+  }, []);
 
   function set(field: string, value: string) {
     setForm((f) => ({ ...f, [field]: value }));
@@ -37,7 +46,6 @@ export default function RegistroPage() {
         ...form,
         ciclo: form.ciclo ? Number(form.ciclo) : undefined,
         codigo_utp: form.codigo_utp || undefined,
-        carrera: form.carrera || undefined,
       });
       router.push("/dashboard/perfil");
     } catch (err) {
@@ -99,11 +107,14 @@ export default function RegistroPage() {
               error={err("ciclo")}
             />
           </div>
-          <Field
+          <Select
             label="Carrera"
+            placeholder="Selecciona tu carrera"
+            options={careers.map((c) => c.carrera)}
             value={form.carrera}
             onChange={(e) => set("carrera", e.target.value)}
             error={err("carrera")}
+            required
           />
           <Field
             label="Contraseña"

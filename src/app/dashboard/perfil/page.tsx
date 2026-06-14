@@ -3,16 +3,28 @@
 import { useEffect, useState } from "react";
 import { api, ApiError } from "@/lib/api";
 import { useAuth } from "@/lib/auth-context";
-import type { Profile } from "@/lib/types";
-import { Button, Field } from "@/components/ui";
+import type { Career, Profile } from "@/lib/types";
+import { Button, Field, Select } from "@/components/ui";
 
 export default function PerfilPage() {
   const { user } = useAuth();
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [careers, setCareers] = useState<Career[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [form, setForm] = useState({ rol_objetivo: "", headline: "", about: "" });
+
+  // Roles disponibles según la carrera del alumno.
+  const rolesDisponibles =
+    careers.find((c) => c.carrera === user?.carrera)?.roles ?? [];
+
+  // Cargar catálogo de carreras (para el selector de rol objetivo).
+  useEffect(() => {
+    api<{ data: Career[] }>("/careers", { auth: false })
+      .then((r) => setCareers(r.data))
+      .catch(() => {});
+  }, []);
 
   // Cargar perfil real desde la API.
   useEffect(() => {
@@ -140,9 +152,10 @@ export default function PerfilPage() {
             <p className="text-xs font-bold uppercase tracking-widest text-gris">
               Editar perfil
             </p>
-            <Field
-              label="Rol objetivo (meta)"
-              placeholder="Ej. Frontend Jr."
+            <Select
+              label={`Rol objetivo (meta) · ${user?.carrera ?? "tu carrera"}`}
+              placeholder="Selecciona tu meta"
+              options={rolesDisponibles}
               value={form.rol_objetivo}
               onChange={(e) => setForm({ ...form, rol_objetivo: e.target.value })}
             />
